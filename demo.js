@@ -1,6 +1,10 @@
 var arDrone = require('ar-drone');
 var client = arDrone.createClient();
 
+var colors = require('colors');
+
+// Config - allow for useful event emitting
+client.config('general:navdata_demo', 'FALSE');
 
 // Altitude
 client.on('altitudeChange', function(altitude){
@@ -11,25 +15,28 @@ client.on('altitudeChange', function(altitude){
 // Warn user drone has a low battery
 client.on('lowBattery', function(battery){
 
-    console.log("==========================");
-    console.log("BATTERY IS LOW: " + battery);
-    console.log("==========================");
+    var label = "BATTERY IS LOW: ".yellow;
+    console.log("==========================".yellow);
+    console.log(label + battery);
+    console.log("==========================".yellow);
 });
 
 client.on('batteryChange', function(battery){
 
-    console.log('--------------------------');
-    console.log('Battery Change: ' + battery);
-    console.log('--------------------------');
+    var label = "Battery Change: ".blue;
+    console.log("--------------------------".blue);
+    console.log(label + battery);
+    console.log("--------------------------".blue);
 });
 
 
 // Generic error catching
 client.on("error", function(error){
 
-    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=");
-    console.log("Error: " + error);
-    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=");
+    var label = "ERROR: ".red;
+    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=".red);
+    console.log(label + error);
+    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=".red);
 });
 
 
@@ -39,17 +46,17 @@ client.takeoff();
 client
     .after(2000, function(){
 
-        this.clockwise(.5);
+        this.clockwise(1);
     })
-    .after(2000, function(){
+    .after(5000, function(){
 
-        this.clockwise(5);
-    });
-    .after(1000, function(){
-
-        this.animateLEDs('snakeGreenRed', 2, 5);
+        this.counterClockwise(1);
     })
-    .after(1000, function(){
+    .after(5000, function(){
+
+        this.animateLeds('snakeGreenRed', 2, 5);
+    })
+    .after(3000, function(){
 
         this.stop();
         this.land();
