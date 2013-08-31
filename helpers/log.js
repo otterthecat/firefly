@@ -41,5 +41,5 @@ exports.error = function(data){
 
 exports.info = function(data){
 
-	log('info', data)
+	log('info', data);
 };

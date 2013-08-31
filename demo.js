@@ -8,10 +8,10 @@ var client = arDrone.createClient();
 client.config('general:navdata_demo', 'FALSE');
 
 // Altitude
-client.on('altitudeChange', function(altitude){
+// client.on('altitudeChange', function(altitude){
 
-    log.info(">> Altitude is " + altitude);
-});
+//     log.info(">> Altitude is " + altitude);
+// });
 
 // Warn user drone has a low battery
 client.on('lowBattery', function(battery){
@@ -37,19 +37,31 @@ client.on("error", function(error){
 client.takeoff();
 
 client
-    .after(2000, function(){
+    .after(3500, function(){
 
-        this.clockwise(1);
+        this.up(.4)
     })
-    .after(5000, function(){
+    .after(1500, function(){
 
-        this.counterClockwise(1);
+        this.front(.6);
     })
-    .after(5000, function(){
+    .after(1500, function(){
 
-        this.animateLeds('snakeGreenRed', 2, 5);
+        this.clockwise(.6)
     })
-    .after(3000, function(){
+    .after(1500, function(){
+
+        this.front(.6);
+    })
+    .after(1500, function(){
+
+        this.clockwise(.6);
+    })
+    .after(2500, function(){
+
+        this.animateLeds('green', 2, 5);
+    })
+    .after(4000, function(){
 
         this.stop();
         this.land();
