@@ -1,7 +1,8 @@
 var arDrone = require('ar-drone');
+var log = require('./helpers/log');
+
 var client = arDrone.createClient();
 
-var colors = require('colors');
 
 // Config - allow for useful event emitting
 client.config('general:navdata_demo', 'FALSE');
@@ -9,34 +10,26 @@ client.config('general:navdata_demo', 'FALSE');
 // Altitude
 client.on('altitudeChange', function(altitude){
 
-    console.log("^ Altitude has changed (" + altitude + ") ^");
+    log.info(">> Altitude is " + altitude);
 });
 
 // Warn user drone has a low battery
 client.on('lowBattery', function(battery){
 
-    var label = "BATTERY IS LOW: ".yellow;
-    console.log("==========================".yellow);
-    console.log(label + battery);
-    console.log("==========================".yellow);
+    log.warn("Battery is low " + battery);
 });
 
 client.on('batteryChange', function(battery){
 
-    var label = "Battery Change: ".blue;
-    console.log("--------------------------".blue);
-    console.log(label + battery);
-    console.log("--------------------------".blue);
+    log.info("battery charge is now " + battery);
 });
 
 
 // Generic error catching
 client.on("error", function(error){
 
-    var label = "ERROR: ".red;
-    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=".red);
-    console.log(label + error);
-    console.log("+=+=+=+=+=+=+=+=+=+=+=+=+=".red);
+
+    log.error(error);
 });
 
 
