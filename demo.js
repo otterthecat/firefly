@@ -1,36 +1,10 @@
 var arDrone = require('ar-drone');
+var clientEvents = require('./helpers/clientEvents');
 var log = require('./helpers/log');
 
 var client = arDrone.createClient();
-
-
-// Config - allow for useful event emitting
-client.config('general:navdata_demo', 'FALSE');
-
-// Altitude
-// client.on('altitudeChange', function(altitude){
-
-//     log.info(">> Altitude is " + altitude);
-// });
-
-// Warn user drone has a low battery
-client.on('lowBattery', function(battery){
-
-    log.warn("Battery is low " + battery);
-});
-
-client.on('batteryChange', function(battery){
-
-    log.info("battery charge is now " + battery);
-});
-
-
-// Generic error catching
-client.on("error", function(error){
-
-
-    log.error(error);
-});
+// listen for variety of events
+clientEvents.set(client);
 
 
 // Let's get Flying!
