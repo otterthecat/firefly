@@ -12,7 +12,7 @@
 
 // Imports
 var arDrone = require('ar-drone');
-var clientEvents = require('./helpers/clientEvents');
+var clientEvents = require('../helpers/clientEvents');
 
 // Set Objects
 var client = arDrone.createClient();
