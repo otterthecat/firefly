@@ -20,6 +20,8 @@ clientEvents.set(client);
 
 var interval = 1250
 var speed = .3;
+var altIncrement = .1;
+var altDecrement = .2;
 
 var maxAltitude = .5;
 var count = 0;
@@ -31,7 +33,7 @@ client.on('changeAltitude', function(altitude){
     if(altitude > maxAltitude){
 
         count += 1;
-        this.down(.2);
+        this.down(altDecrement);
     }
 });
 
@@ -40,7 +42,7 @@ var climb = function(){
     if(count < maxAttempts){
 
 
-        client.up(.1);
+        client.up(altIncrement);
     }else {
 
         clearInterval(timer);
@@ -49,4 +51,4 @@ var climb = function(){
     }
 }
 
-timer = setInterval(climb, 1000);
+timer = setInterval(climb, interval);
