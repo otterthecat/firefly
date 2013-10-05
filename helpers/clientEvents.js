@@ -1,6 +1,6 @@
 var log = require('./log');
 
-exports.set = function(log){
+exports.set = function(arClient){
 
     // Config - allow for useful event emitting
     arClient.config('general:navdata_demo', 'FALSE');
@@ -31,7 +31,7 @@ exports.set = function(log){
         log.info("***** HOVERING *****");
     });
 
-    // Altitude - currently commented out as it produces log spam
+    //Altitude - currently commented out as it produces log spam
     // arClient.on('altitudeChange', function(altitude){
 
     //     log.info(">> Altitude is " + altitude);
@@ -39,10 +39,10 @@ exports.set = function(log){
 
     // Metadata of drone
     // this may also spam the console, but haven't run it yet.
-    arClient.on('navdata', function(data){
+    // arClient.on('navdata', function(data){
 
-        log.info('NavData is ' + data);
-    });
+    //     log.info('NavData is ' + data);
+    // });
 
     // Warn user drone has a low battery
     arClient.on('lowBattery', function(battery){

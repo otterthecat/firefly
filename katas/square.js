@@ -1,7 +1,7 @@
 /**************************************************************
     Intent:
     Drone should fly in a square pattern, initially
-    going forward, then forming the square in a clockwise
+    going forward, then forming the square in a left
     rotation.
 
     After completing the square, it should flash it's lights
@@ -19,52 +19,33 @@ var client = arDrone.createClient();
 // listen for variety of events
 clientEvents.set(client);
 
-var interval = 1250
-var speed = .3;
+var interval = 1500
+var speed = .5;
 
 client.takeoff();
 
 client
     .after(interval, function(){
 
-        this.front(speed)
+        this.front(speed * 2)
     })
     .after(interval, function(){
 
-        this.clockwise(speed);
+        this.up(1);
+    })
+    .after(interval, function(){
+
+        this.counterClockwise(.2)
+    })
+    .after(interval, function(){
+
+        this.up(speed);
     })
     .after(interval, function(){
 
         this.front(speed);
     })
     .after(interval, function(){
-
-        this.clockwise(speed);
-    })
-    .after(interval, function(){
-
-        this.front(speed);
-    })
-    .after(interval, function(){
-
-        this.clockwise(speed);
-    })
-    .after(interval, function(){
-
-        this.front(speed)
-    })
-    .after(interval, function(){
-
-        this.stop();
-    })
-    after(interval, function(){
-
-        this.animateLeds('leftMissle', 5, 1);
-        this.animateLeds('rightMissle', 5, 1);
-        this.animateLeds('blinkOrange', 5, 1);
-        this.animate('flipBehind', 1000)
-    })
-    .after(6000, function(){
 
         this.stop();
         this.land();

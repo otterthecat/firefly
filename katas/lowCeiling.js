@@ -18,18 +18,22 @@ var client = arDrone.createClient();
 // listen for variety of events
 clientEvents.set(client);
 
-var interval = 1250
-var speed = .3;
-var altIncrement = .1;
-var altDecrement = .2;
+var interval = 750
+var speed = .2;
+var altIncrement = .6;
+var altDecrement = .5;
 
-var maxAltitude = .5;
+var maxAltitude = 2;
 var count = 0;
 var maxAttempts = 10;
 var timer;
 
+client.takeoff();
+
+
 client.on('changeAltitude', function(altitude){
 
+    console.log("+++++++++++++ Starting Down ");
     if(altitude > maxAltitude){
 
         count += 1;
@@ -39,12 +43,15 @@ client.on('changeAltitude', function(altitude){
 
 var climb = function(){
 
+        console.log("+++++++++++++ DOWN ");
+
     if(count < maxAttempts){
 
-
+        console.log("UP");
         client.up(altIncrement);
     }else {
 
+        console.log("land");
         clearInterval(timer);
         client.stop();
         client.land();
